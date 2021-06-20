@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:05:42 by tomartin          #+#    #+#             */
-/*   Updated: 2021/06/20 21:13:32 by tomartin         ###   ########.fr       */
+/*   Updated: 2021/06/20 21:37:41 by tomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static int	ft_extract_line (char **buff, char **line)
 	int		i;
 
 	i = 0;
-	if (!*buff)
-		*buff = ft_strdup ("");
+	answ = 1;
 	if (ft_strchr (*buff, '\n'))
 	{
 		while (*(*buff + i) != '\n')
@@ -51,7 +50,7 @@ static int	ft_extract_line (char **buff, char **line)
 		ft_resize_buff (&*buff);
 		answ = 1;
 	}
-	else
+	else if (*buff)
 	{
 		*line = ft_strdup (*buff);
 		free (*buff);
