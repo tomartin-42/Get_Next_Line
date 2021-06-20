@@ -1,4 +1,4 @@
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static char	*save_text(char *cpy, char c)
 {

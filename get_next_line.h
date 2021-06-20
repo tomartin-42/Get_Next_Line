@@ -12,6 +12,6 @@ int		get_next_line(int fd, char **line);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
-# define BUFF_SIZE 10;
+# define BUFF_SIZE 10
 #endif
 
