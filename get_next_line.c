@@ -1,22 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/20 18:05:42 by tomartin          #+#    #+#             */
+/*   Updated: 2021/06/20 21:13:32 by tomartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-{
-	char *aux;
 
-	if (!read_f[fd])
-		read_f[fd] = ft_strdup (read_f);
+static char	*ft_cpy_to_buff_r (char *read_f,char **buff_r)
+{
+	char	*aux;
+
+	if (!*buff_r)
+		return (aux = ft_strdup (read_f));
 	else
-	{
-		aux = ft_strjoin (buff_r[fd], read_f);
-		free (buff_r[fd]);
-	}
+		aux = ft_strjoin (*buff_r, read_f);
+	free (*buff_r);
 	return (aux);
 }
 
+static void	ft_resize_buff (char **buff)
+{
+	char	*aux;
+
+	aux = ft_strdup (ft_strchr (*buff, '\n'));
+	free (*buff);
+	*buff = ft_strdup (aux);
+	free(aux);
+}
+
+static int	ft_extract_line (char **buff, char **line)
+{	
+	int		answ;
+	int		i;
+
+	i = 0;
+	if (!*buff)
+		*buff = ft_strdup ("");
+	if (ft_strchr (*buff, '\n'))
+	{
+		while (*(*buff + i) != '\n')
+			i++;
+		*line = ft_substr (*buff, 0, i); 
+		ft_resize_buff (&*buff);
+		answ = 1;
+	}
+	else
+	{
+		*line = ft_strdup (*buff);
+		free (*buff);
+		buff = NULL; 
+		answ = 0;
+	}
+	return (answ);
+}
 
 int	get_next_line (int	fd, char **line)
 {
-	char		*read_f[BUFF_SIZE + 1];
+	char		read_f[BUFF_SIZE + 1];
 	static char	*buff_r[FD_SETSIZE];
 	ssize_t		len;
 
@@ -33,8 +80,5 @@ int	get_next_line (int	fd, char **line)
 				break ;
 		len = read (fd, read_f, BUFF_SIZE);
 	}
-	printf ("buff = %s\n", buff_r[fd]);
-	return (0);
+	return (ft_extract_line (&buff_r[fd], &*line));
 }
-
-static char	*ft_cpy_to_buff_r (char *read_f,char *buff_r)

@@ -1,76 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/20 18:16:06 by tomartin          #+#    #+#             */
+/*   Updated: 2021/06/20 20:51:02 by tomartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-static char	*save_text(char *cpy, char c)
+char	*ft_strdup(const char *s)
 {
-	char	*text;
-	int		len;
+	char	*p;
+	int		i;
 
-	len = 0;
-	while (cpy[len] && cpy[len] != c)
-		len++;
-	text = malloc(len + 1);
-	if (!text)
+	i = 0;
+	while (s[i])
+		i++;
+	p = (char *)malloc (i + 1);
+	if (!p)
 		return (NULL);
-	ft_memcpy(text, cpy, len);
-	text[len] = '\0';
-	return (text);
+	i = 0;
+	while (s[i])
+	{
+		p[i] = s[i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
 }
 
-static void	cat_static(char **save, char **line, char *cpy)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (!*save)
-		*save = ft_strdup(cpy);
+	int		i;
+	int		j;
+	char	*p;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = ft_strlen(s1) + ft_strlen(s2);
+	p = malloc(i + 1);
+	if (!p)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[j] != '\0')
+	{
+		p[j] = s1[j];
+		j++;
+	}
+	while (s2[i] != '\0')
+		p[j++] = s2[i++];
+	p[j] = '\0';
+	return (p);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	a;
+
+	a = 0;
+	while (str[a] != '\0')
+		a++;
+	return (a);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != (char)c)
+		i++;
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	return (NULL);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*p;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	j = ft_strlen(s);
+	if (j < len)
+		p = malloc (sizeof (char) * (j + 1));
 	else
+		p = malloc (sizeof (char) * (len + 1));
+	if (!p)
+		return (NULL);
+	if (j >= start)
 	{
-		*line = ft_strjoin (*save, cpy);
-		free (*save);
-		*save = *line;
-	}
+		while (i < len && s[start])
+			p[i++] = s[start++];
+		p[i] = '\0';
 }
-
-static int	save_line(char **save, char **line)
-{
-	char	*eol;
-
-	if (ft_strchr(*save, '\n'))
-	{
-		eol = ft_strdup(ft_strchr(*save, '\n') + 1);
-		*line = save_text (*save, '\n');
-		free(*save);
-		*save = ft_strdup(eol);
-		free(eol);
-		return (1);
+	return (p);
 	}
-	*line = save_text (*save, '\0');
-	free(*save);
-	*save = NULL;
-	return (0);
-}
-
-static int	get_next_line(int fd, char **line)
-{
-	static char	*save[FD_SETSIZE];
-	char		cpy[BUFFER_SIZE + 1];
-	ssize_t		n_bytes;
-
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
-		return (-1);
-	n_bytes = read(fd, cpy, BUFFER_SIZE);
-	if (n_bytes < 0)
-		return (-1);
-	if (!save[fd] && !n_bytes)
-	{
-		*line = ft_strdup("");
-		return (0);
-	}
-	while (n_bytes > 0)
-	{
-		cpy[n_bytes] = '\0';
-		cat_static(&save[fd], &*line, cpy);
-		if (ft_strchr(save[fd], '\n'))
-			break ;
-		n_bytes = read(fd, cpy, BUFFER_SIZE);
-	}
-	return (save_line(&save[fd], &*line));
-}
-
