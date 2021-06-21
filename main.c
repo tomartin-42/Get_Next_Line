@@ -8,17 +8,18 @@ int main(void)
 
 	line = NULL;
 //	fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/test/normal.txt", O_RDONLY);
-	//fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/test/normal.txt", O_RDONLY);
-	fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/ejemplo.txt", O_RDONLY);
+	//fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/test/empty.txt", O_RDONLY);
+	fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/test/only_newline.txt", O_RDONLY);
+	//fd1 = open ("/Users/tomartin/getnextlinepruebas/Get_Next_Line_Tester/ejemplo.txt", O_RDONLY);
 	//fd1 = open ("ejemplo.txt", O_RDONLY);
-//	 get_next_line(fd1, &line);
-	while ((r = get_next_line(fd1, &line)) ==1)
-	{
+	 get_next_line(fd1, &line);
+//	while ((r = get_next_line(fd1, &line)) ==1)
+//	{
 		printf("%s\n", line);
 //		free(line);
 //		line = NULL;
-	}
-	printf("%s", line);
+//	}
+//	printf("%s", line);
 //	free(line);
 //	line = NULL;
 }

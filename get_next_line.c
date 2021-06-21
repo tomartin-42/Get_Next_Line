@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:05:42 by tomartin          #+#    #+#             */
-/*   Updated: 2021/06/21 09:22:20 by tomartin         ###   ########.fr       */
+/*   Updated: 2021/06/21 12:58:45 by tomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ static char	*ft_cpy_to_buff_r (char *read_f,char **buff_r)
 {
 	char	*aux;
 
+	if (!read_f)
+		read_f = ft_strdup ("");
 	if (!*buff_r)
 		 aux = ft_strdup (read_f);
 	else
 	{
 		aux = ft_strjoin (*buff_r, read_f);
-		free (*buff_r);
+		if (*buff_r)
+			free (*buff_r);
 	}
 	return (aux);
 }
@@ -55,9 +58,8 @@ static int	ft_extract_line (char **buff, char **line)
 	{
 		*line = ft_strdup (*buff);
 		free (*buff);
-		buff = NULL; 
+		*buff = NULL;
 		answ = 0;
-	//printf("line = %s\n", *line);
 	}
 	return (answ);
 }
@@ -74,7 +76,6 @@ int	get_next_line (int	fd, char **line)
 	len = read (fd, read_f, BUFF_SIZE);
 	if (len < 0)
 		return (-1);
-	//while (len > 0)
 	while (1)
 	{
 		read_f[len] = '\0';
