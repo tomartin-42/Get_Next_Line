@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:05:42 by tomartin          #+#    #+#             */
-/*   Updated: 2021/06/21 09:17:53 by tomartin         ###   ########.fr       */
+/*   Updated: 2021/06/21 09:22:20 by tomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ int	get_next_line (int	fd, char **line)
 	len = read (fd, read_f, BUFF_SIZE);
 	if (len < 0)
 		return (-1);
-	while (len > 0)
+	//while (len > 0)
+	while (1)
 	{
 		read_f[len] = '\0';
 		buff_r[fd] = ft_cpy_to_buff_r (read_f, &buff_r[fd]);
-		if (ft_strchr (buff_r[fd], '\n'))
+		if (ft_strchr (buff_r[fd], '\n') || len == 0)
 				break ;
 		len = read (fd, read_f, BUFF_SIZE);
 	}
