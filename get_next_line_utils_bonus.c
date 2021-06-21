@@ -101,6 +101,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		while (i < len && s[start])
 			p[i++] = s[start++];
 		p[i] = '\0';
-}
-	return (p);
 	}
+	return (p);
+}
