@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 07:59:20 by tomartin          #+#    #+#             */
+/*   Updated: 2021/06/22 09:29:45 by tomartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -6,8 +18,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-# ifndef BUFFER_SIZE 
-#  define BUFFER_SIZE 10 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
 # endif
 
 char	*ft_strchr(const char *s, int c);

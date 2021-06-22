@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 07:58:37 by tomartin          #+#    #+#             */
+/*   Updated: 2021/06/22 09:31:18 by tomartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
@@ -6,8 +18,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-# ifndef BUFFER_SIZE 
-#  define BUFFER_SIZE 10 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
 # endif
 
 char	*ft_strchr(const char *s, int c);

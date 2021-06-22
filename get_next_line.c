@@ -6,7 +6,7 @@
 /*   By: tomartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:05:42 by tomartin          #+#    #+#             */
-/*   Updated: 2021/06/21 12:58:45 by tomartin         ###   ########.fr       */
+/*   Updated: 2021/06/22 09:43:13 by tomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,20 @@ static int	ft_extract_line (char **buff, char **line)
 
 int	get_next_line (int	fd, char **line)
 {
-	char		read_f[BUFFER_SIZE + 1];
+	char		*read_f;
 	static char	*buff_r[FD_SETSIZE];
 	ssize_t		len;
 	int			answ;
 
 	if (BUFFER_SIZE < 1 || fd < 0 || fd > FD_SETSIZE || !line)
 		return (-1);
+	read_f = malloc (BUFFER_SIZE + 1);
 	len = read (fd, read_f, BUFFER_SIZE);
 	if (len < 0)
+	{
+		free (read_f);
 		return (-1);
+	}
 	while (1)
 	{
 		read_f[len] = '\0';
@@ -85,5 +89,6 @@ int	get_next_line (int	fd, char **line)
 		len = read (fd, read_f, BUFFER_SIZE);
 	}
 	answ = ft_extract_line (&buff_r[fd], &*line);
+	free (read_f);
 	return (answ);
 }
